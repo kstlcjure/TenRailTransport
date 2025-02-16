@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { useLocation } from "wouter";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -27,12 +28,18 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 export default function Contact() {
   const { toast } = useToast();
+  const [location] = useLocation();
+
+  // Get subject from URL if it exists
+  const searchParams = new URLSearchParams(window.location.search);
+  const subjectFromURL = searchParams.get('subject') || '';
+
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       name: "",
       email: "",
-      subject: "",
+      subject: decodeURIComponent(subjectFromURL),
       message: "",
     },
   });
@@ -50,7 +57,7 @@ export default function Contact() {
       <section className="max-w-4xl mx-auto text-center mb-16">
         <h1 className="text-4xl font-bold mb-6">Contact Us</h1>
         <p className="text-lg text-muted-foreground">
-          Get in touch with our team for any inquiries about our services.
+          Get in touch with our team for any inquiries about our services or job opportunities.
         </p>
       </section>
 
@@ -107,7 +114,9 @@ export default function Contact() {
                       <FormLabel>Message</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Your message"
+                          placeholder={subjectFromURL.includes('Job Application') ? 
+                            "Please tell us about your experience and why you would be a good fit for this position." :
+                            "Your message"}
                           className="min-h-[120px]"
                           {...field}
                         />

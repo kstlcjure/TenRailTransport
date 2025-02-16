@@ -1,7 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "wouter";
 
 export default function Jobs() {
+  const [, setLocation] = useLocation();
+
   const jobs = [
     {
       title: "Train Engineer",
@@ -23,6 +26,11 @@ export default function Jobs() {
     }
   ];
 
+  const handleApply = (job: typeof jobs[0]) => {
+    // Navigate to contact page with job information in the URL
+    setLocation(`/contact?subject=${encodeURIComponent(`Job Application: ${job.title}`)}`);
+  };
+
   return (
     <div className="container py-12">
       <section className="max-w-4xl mx-auto text-center mb-16">
@@ -42,7 +50,12 @@ export default function Jobs() {
                 <span className="text-sm text-muted-foreground">{job.type}</span>
               </div>
               <p className="mb-6 text-muted-foreground">{job.description}</p>
-              <Button className="w-full">Apply Now</Button>
+              <Button 
+                className="w-full"
+                onClick={() => handleApply(job)}
+              >
+                Apply Now
+              </Button>
             </CardContent>
           </Card>
         ))}
