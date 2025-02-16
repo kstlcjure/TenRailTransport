@@ -14,8 +14,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
 import { useLocation } from "wouter";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -44,30 +46,27 @@ export default function Contact() {
     },
   });
 
-  function onSubmit(data: ContactFormValues) {
-    // Submit the form data to our API endpoint
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(result => {
+  const mutation = useMutation({
+    mutationFn: (data: ContactFormValues) =>
+      apiRequest('POST', '/api/contact', data),
+    onSuccess: () => {
       toast({
         title: "Message sent!",
         description: "We'll get back to you as soon as possible.",
       });
       form.reset();
-    })
-    .catch(error => {
+    },
+    onError: () => {
       toast({
         title: "Error",
         description: "There was a problem sending your message. Please try again.",
         variant: "destructive",
       });
-    });
+    },
+  });
+
+  function onSubmit(data: ContactFormValues) {
+    mutation.mutate(data);
   }
 
   return (
@@ -92,7 +91,7 @@ export default function Contact() {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your name" {...field} />
+                        <Input placeholder="Your name" {...field} disabled={mutation.isPending} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -105,7 +104,7 @@ export default function Contact() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="your@email.com" {...field} />
+                        <Input placeholder="your@email.com" {...field} disabled={mutation.isPending} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -118,7 +117,7 @@ export default function Contact() {
                     <FormItem>
                       <FormLabel>Subject</FormLabel>
                       <FormControl>
-                        <Input placeholder="Message subject" {...field} />
+                        <Input placeholder="Message subject" {...field} disabled={mutation.isPending} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -137,14 +136,22 @@ export default function Contact() {
                             "Your message"}
                           className="min-h-[120px]"
                           {...field}
+                          disabled={mutation.isPending}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full">
-                  Send Message
+                <Button type="submit" className="w-full" disabled={mutation.isPending}>
+                  {mutation.isPending ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    "Send Message"
+                  )}
                 </Button>
               </form>
             </Form>
