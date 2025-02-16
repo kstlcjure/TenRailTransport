@@ -73,6 +73,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.status(201).json(service);
   });
 
+  // Contact form submission
+  app.post("/api/contact", async (req, res) => {
+    const { name, email, subject, message } = req.body;
+
+    // Log the submission details
+    console.log("Contact Form Submission:");
+    console.log(`From: ${name} (${email})`);
+    console.log(`Subject: ${subject}`);
+    console.log(`Message: ${message}`);
+    console.log("This would be sent to: jure.kastelic@tenrail.net");
+
+    // For now, we just acknowledge receipt
+    res.json({ 
+      success: true, 
+      message: "Form submitted successfully. Note: Currently messages are only logged to the server console." 
+    });
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

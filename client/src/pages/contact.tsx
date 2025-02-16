@@ -45,11 +45,29 @@ export default function Contact() {
   });
 
   function onSubmit(data: ContactFormValues) {
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
+    // Submit the form data to our API endpoint
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(result => {
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      form.reset();
+    })
+    .catch(error => {
+      toast({
+        title: "Error",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive",
+      });
     });
-    form.reset();
   }
 
   return (
@@ -114,7 +132,7 @@ export default function Contact() {
                       <FormLabel>Message</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder={subjectFromURL.includes('Job Application') ? 
+                          placeholder={subjectFromURL.includes('Job Application') ?
                             "Please tell us about your experience and why you would be a good fit for this position." :
                             "Your message"}
                           className="min-h-[120px]"
