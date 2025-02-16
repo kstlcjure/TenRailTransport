@@ -1,6 +1,34 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail } from "lucide-react";
 
+const partners = [
+  {
+    name: "Global Logistics Co.",
+    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9",
+    description: "International shipping and logistics partner"
+  },
+  {
+    name: "EcoRail Solutions",
+    logo: "https://images.unsplash.com/photo-1604004215402-e0d5b6a8ed76",
+    description: "Sustainable rail technology provider"
+  },
+  {
+    name: "SafeTrack Systems",
+    logo: "https://images.unsplash.com/photo-1599305019347-8875a4564b6e",
+    description: "Railway safety and maintenance"
+  },
+  {
+    name: "CargoTech Industries",
+    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9",
+    description: "Cargo handling equipment manufacturer"
+  },
+  {
+    name: "RailTech Innovations",
+    logo: "https://images.unsplash.com/photo-1599305019347-8875a4564b6e",
+    description: "Railway technology solutions"
+  }
+];
+
 export default function About() {
   const team = [
     {
@@ -41,28 +69,6 @@ export default function About() {
     }
   ];
 
-  const partners = [
-    {
-      name: "Global Logistics Co.",
-      image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0",
-      description: "International shipping and logistics partner"
-    },
-    {
-      name: "EcoRail Solutions",
-      image: "https://images.unsplash.com/photo-1497366216548-37526070297c",
-      description: "Sustainable rail technology provider"
-    },
-    {
-      name: "SafeTrack Systems",
-      image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
-      description: "Railway safety and maintenance"
-    },
-    {
-      name: "CargoTech Industries",
-      image: "https://images.unsplash.com/photo-1516937941344-00b4e0337589",
-      description: "Cargo handling equipment manufacturer"
-    }
-  ];
 
   return (
     <div className="container py-12">
@@ -105,19 +111,18 @@ export default function About() {
 
       <section>
         <h2 className="text-3xl font-bold text-center mb-12">Our Business Partners</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {partners.map((partner, i) => (
             <Card key={i} className="overflow-hidden">
-              <CardContent className="p-0">
-                <img
-                  src={partner.image}
-                  alt={partner.name}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{partner.name}</h3>
-                  <p className="text-muted-foreground">{partner.description}</p>
+              <CardContent className="p-4">
+                <div className="aspect-square relative mb-2">
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
+                <h3 className="text-sm font-semibold text-center">{partner.name}</h3>
               </CardContent>
             </Card>
           ))}

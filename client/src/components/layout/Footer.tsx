@@ -11,9 +11,9 @@ export default function Footer() {
   return (
     <footer className="border-t bg-background">
       <div className="container py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           {/* Company Info */}
-          <div>
+          <div className="flex flex-col items-center">
             <h3 className="text-lg font-semibold mb-4">TenRail</h3>
             <div className="flex items-center space-x-2 text-muted-foreground">
               <Phone className="h-4 w-4" />
@@ -22,7 +22,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="flex flex-col items-center">
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <nav className="flex flex-col space-y-2">
               <Link href="/about" className="text-muted-foreground hover:text-primary">About Us</Link>
@@ -32,7 +32,7 @@ export default function Footer() {
           </div>
 
           {/* Social Media */}
-          <div>
+          <div className="flex flex-col items-center">
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
