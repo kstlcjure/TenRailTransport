@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertJobSchema, insertNewsSchema, insertServiceSchema } from "@shared/schema";
+import { sendContactEmail } from "./emailService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Jobs routes
@@ -77,18 +78,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/contact", async (req, res) => {
     const { name, email, subject, message } = req.body;
 
-    // Log the submission details
-    console.log("Contact Form Submission:");
-    console.log(`From: ${name} (${email})`);
-    console.log(`Subject: ${subject}`);
-    console.log(`Message: ${message}`);
-    console.log("This would be sent to: jure.kastelic@tenrail.net");
+    try {
+      const emailSent = await sendContactEmail({ name, email, subject, message });
 
-    // For now, we just acknowledge receipt
-    res.json({ 
-      success: true, 
-      message: "Form submitted successfully. Note: Currently messages are only logged to the server console." 
-    });
+      if (emailSent) {
+        res.json({ 
+          success: true, 
+          message: "Message sent successfully. We'll get back to you soon." 
+        });
+      } else {
+        res.status(500).json({ 
+          success: false, 
+          message: "Failed to send message. Please try again later." 
+        });
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      res.status(500).json({ 
+        success: false, 
+        message: "An error occurred while sending your message." 
+      });
+    }
   });
 
   const httpServer = createServer(app);

@@ -1,9 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useLocation } from "wouter";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useState } from "react";
+import { Mail } from "lucide-react";
 
 export default function Jobs() {
-  const [, setLocation] = useLocation();
+  const [showDialog, setShowDialog] = useState(false);
 
   const jobs = [
     {
@@ -26,11 +34,6 @@ export default function Jobs() {
     }
   ];
 
-  const handleApply = (job: typeof jobs[0]) => {
-    // Navigate to contact page with job information in the URL
-    setLocation(`/contact?subject=${encodeURIComponent(`Job Application: ${job.title}`)}`);
-  };
-
   return (
     <div className="container py-12">
       <section className="max-w-4xl mx-auto text-center mb-16">
@@ -52,7 +55,7 @@ export default function Jobs() {
               <p className="mb-6 text-muted-foreground">{job.description}</p>
               <Button 
                 className="w-full"
-                onClick={() => handleApply(job)}
+                onClick={() => setShowDialog(true)}
               >
                 Apply Now
               </Button>
@@ -60,6 +63,26 @@ export default function Jobs() {
           </Card>
         ))}
       </section>
+
+      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Kako se prijaviti</DialogTitle>
+            <DialogDescription className="flex flex-col items-center gap-4 pt-4">
+              <p>Pošljite svojo prijavo z življenjepisom na elektronski naslov:</p>
+              <div className="flex items-center gap-2 text-primary">
+                <Mail className="h-4 w-4" />
+                <a 
+                  href="mailto:jure.kastelic@tenrail.net"
+                  className="hover:underline"
+                >
+                  jure.kastelic@tenrail.net
+                </a>
+              </div>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
