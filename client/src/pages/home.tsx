@@ -1,5 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { Link } from "wouter";
 
 export default function Home() {
   return (
@@ -8,13 +11,13 @@ export default function Home() {
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1593018931419-96adfd5b182d")',
+            backgroundImage: 'url("https://images.unsplash.com/photo-1519003722824-194d4455a60c")',
             filter: 'brightness(0.7)'
           }}
         />
         <div className="container relative z-10 text-center text-white">
           <motion.h1 
-            className="text-5xl font-bold mb-6"
+            className="text-5xl font-bold mb-6 font-display"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -22,7 +25,7 @@ export default function Home() {
             Moving Freight Forward
           </motion.h1>
           <motion.p 
-            className="text-xl max-w-2xl mx-auto"
+            className="text-xl max-w-2xl mx-auto font-sans"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -33,8 +36,8 @@ export default function Home() {
       </section>
 
       <section className="container py-20">
-        <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h2 className="text-3xl font-bold text-center mb-12 font-display">Our Services</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           <Card>
             <CardContent className="p-6">
               <h3 className="text-xl font-semibold mb-4">Freight Transport</h3>
@@ -54,11 +57,19 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
+        <div className="text-center">
+          <Link href="/services">
+            <Button className="gap-2">
+              Explore Our Services
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </Link>
+        </div>
       </section>
 
       <section className="bg-primary/5 py-20">
         <div className="container">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose TenRail?</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 font-display">Why Choose TenRail?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { title: "Reliability", value: "99.9%" },

@@ -8,31 +8,44 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import { Mail } from "lucide-react";
+import { Mail, FileText } from "lucide-react";
 
 export default function Jobs() {
   const [showDialog, setShowDialog] = useState(false);
 
+  /* Uncomment this section when not hiring and comment out the jobs array below
+  const isHiring = false;
+  const jobs: any[] = [];
+  */
+
+  const isHiring = true;
   const jobs = [
     {
       title: "Train Engineer",
       location: "Chicago, IL",
       type: "Full-time",
-      description: "Experienced train engineer needed for freight operations."
+      description: "Experienced train engineer needed for freight operations.",
+      pdfUrl: "/pdfs/train-engineer-position.pdf"
     },
     {
       title: "Logistics Coordinator",
       location: "Atlanta, GA",
       type: "Full-time",
-      description: "Coordinate freight movements and optimize routes."
+      description: "Coordinate freight movements and optimize routes.",
+      pdfUrl: "/pdfs/logistics-coordinator-position.pdf"
     },
     {
       title: "Safety Inspector",
       location: "Houston, TX",
       type: "Full-time",
-      description: "Ensure compliance with safety regulations and standards."
+      description: "Ensure compliance with safety regulations and standards.",
+      pdfUrl: "/pdfs/safety-inspector-position.pdf"
     }
   ];
+
+  const handlePdfOpen = (pdfUrl: string) => {
+    window.open(pdfUrl, '_blank');
+  };
 
   return (
     <div className="container py-12">
@@ -43,26 +56,47 @@ export default function Jobs() {
         </p>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {jobs.map((job, i) => (
-          <Card key={i}>
-            <CardContent className="p-6">
-              <h3 className="text-xl font-semibold mb-2">{job.title}</h3>
-              <div className="flex items-center gap-4 mb-4">
-                <span className="text-sm text-muted-foreground">{job.location}</span>
-                <span className="text-sm text-muted-foreground">{job.type}</span>
-              </div>
-              <p className="mb-6 text-muted-foreground">{job.description}</p>
-              <Button 
-                className="w-full"
-                onClick={() => setShowDialog(true)}
-              >
-                Apply Now
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </section>
+      {!isHiring ? (
+        <Card>
+          <CardContent className="p-6 text-center">
+            <h3 className="text-xl font-semibold mb-4">Currently Not Hiring</h3>
+            <p className="text-muted-foreground">
+              Thank you for your interest in TenRail. We are currently not accepting applications, but please check back later for new opportunities.
+            </p>
+          </CardContent>
+        </Card>
+      ) : (
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {jobs.map((job, i) => (
+            <Card key={i}>
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-2">{job.title}</h3>
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-sm text-muted-foreground">{job.location}</span>
+                  <span className="text-sm text-muted-foreground">{job.type}</span>
+                </div>
+                <p className="mb-6 text-muted-foreground">{job.description}</p>
+                <div className="space-y-2">
+                  <Button 
+                    className="w-full"
+                    onClick={() => handlePdfOpen(job.pdfUrl)}
+                  >
+                    <FileText className="w-4 h-4 mr-2" />
+                    View Position Details
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => setShowDialog(true)}
+                  >
+                    Apply Now
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </section>
+      )}
 
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent>
