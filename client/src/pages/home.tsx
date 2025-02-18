@@ -11,7 +11,7 @@ export default function Home() {
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{
-            backgroundImage: 'url("https://images.unsplash.com/photo-1567515523262-66d462c6b4f8")',
+            backgroundImage: 'url("https://images.unsplash.com/photo-1519003722824-194d4455a60c")',
             filter: 'brightness(0.7)'
           }}
         />
@@ -36,58 +36,54 @@ export default function Home() {
       </section>
 
       <section className="container py-20">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 font-display">Our Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            <Card>
-              <CardContent className="p-6 text-center">
-                <h3 className="text-xl font-semibold mb-4">Freight Transport</h3>
-                <p className="text-muted-foreground">Efficient and reliable transportation of goods across the country</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6 text-center">
-                <h3 className="text-xl font-semibold mb-4">Logistics Solutions</h3>
-                <p className="text-muted-foreground">Comprehensive logistics planning and management services</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="p-6 text-center">
-                <h3 className="text-xl font-semibold mb-4">Container Service</h3>
-                <p className="text-muted-foreground">Specialized container handling and transportation</p>
-              </CardContent>
-            </Card>
-          </div>
-          <div className="text-center">
-            <Link href="/services">
-              <Button className="gap-2">
-                Explore Our Services
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
+        <h2 className="text-3xl font-bold text-center mb-12 font-display">Our Services</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold mb-4">Freight Transport</h3>
+              <p className="text-muted-foreground">Efficient and reliable transportation of goods across the country</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold mb-4">Logistics Solutions</h3>
+              <p className="text-muted-foreground">Comprehensive logistics planning and management services</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-6">
+              <h3 className="text-xl font-semibold mb-4">Container Service</h3>
+              <p className="text-muted-foreground">Specialized container handling and transportation</p>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="text-center">
+          <Link href="/services">
+            <Button className="gap-2">
+              Explore Our Services
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </Link>
         </div>
       </section>
 
       <section className="bg-primary/5 py-20">
         <div className="container">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12 font-display">Why Choose TenRail?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                { title: "Reliability", value: "99.9%" },
-                { title: "Miles of Track", value: "20,000+" },
-                { title: "Cities Served", value: "500+" },
-                { title: "Years Experience", value: "25+" }
-              ].map((stat, i) => (
-                <Card key={i}>
-                  <CardContent className="p-6 text-center">
-                    <p className="text-3xl font-bold text-primary mb-2">{stat.value}</p>
-                    <p className="text-muted-foreground">{stat.title}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+          <h2 className="text-3xl font-bold text-center mb-12 font-display">Why Choose TenRail?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { title: "Reliability", value: "99.9%" },
+              { title: "Miles of Track", value: "20,000+" },
+              { title: "Cities Served", value: "500+" },
+              { title: "Years Experience", value: "25+" }
+            ].map((stat, i) => (
+              <Card key={i}>
+                <CardContent className="p-6 text-center">
+                  <p className="text-3xl font-bold text-primary mb-2">{stat.value}</p>
+                  <p className="text-muted-foreground">{stat.title}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
