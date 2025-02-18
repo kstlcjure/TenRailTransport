@@ -1,14 +1,13 @@
-
 import { z } from "zod";
 import { sql } from "drizzle-orm";
-import { integer, text, timestamp, sqliteTable } from "drizzle-orm/sqlite-core";
+import { integer, text, sqliteTable } from "drizzle-orm/sqlite-core";
 
 // Database tables
 export const users = sqliteTable('users', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   username: text('username').notNull(),
   password: text('password').notNull(),
-  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const jobs = sqliteTable('jobs', {
@@ -17,7 +16,7 @@ export const jobs = sqliteTable('jobs', {
   location: text('location').notNull(),
   type: text('type').notNull(),
   description: text('description').notNull(),
-  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const news = sqliteTable('news', {
@@ -27,7 +26,7 @@ export const news = sqliteTable('news', {
   excerpt: text('excerpt').notNull(),
   content: text('content').notNull(),
   imageUrl: text('image_url'),
-  publishedAt: timestamp('published_at').default(sql`CURRENT_TIMESTAMP`),
+  publishedAt: text('published_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const services = sqliteTable('services', {
@@ -35,7 +34,7 @@ export const services = sqliteTable('services', {
   title: text('title').notNull(),
   description: text('description').notNull(),
   imageUrl: text('image_url'),
-  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+  createdAt: text('created_at').default(sql`CURRENT_TIMESTAMP`),
 });
 
 // Zod schemas
