@@ -1,12 +1,49 @@
-import { z } from "zod";
 
-// User schema
+import { z } from "zod";
+import { sql } from "drizzle-orm";
+import { integer, text, timestamp, sqliteTable } from "drizzle-orm/sqlite-core";
+
+// Database tables
+export const users = sqliteTable('users', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  username: text('username').notNull(),
+  password: text('password').notNull(),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const jobs = sqliteTable('jobs', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  title: text('title').notNull(),
+  location: text('location').notNull(),
+  type: text('type').notNull(),
+  description: text('description').notNull(),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const news = sqliteTable('news', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  title: text('title').notNull(),
+  category: text('category').notNull(),
+  excerpt: text('excerpt').notNull(),
+  content: text('content').notNull(),
+  imageUrl: text('image_url'),
+  publishedAt: timestamp('published_at').default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const services = sqliteTable('services', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  title: text('title').notNull(),
+  description: text('description').notNull(),
+  imageUrl: text('image_url'),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+});
+
+// Zod schemas
 export const insertUserSchema = z.object({
   username: z.string(),
   password: z.string()
 });
 
-// Job schema
 export const insertJobSchema = z.object({
   title: z.string(),
   location: z.string(),
@@ -14,7 +51,6 @@ export const insertJobSchema = z.object({
   description: z.string()
 });
 
-// News schema
 export const insertNewsSchema = z.object({
   title: z.string(),
   category: z.string(),
@@ -23,14 +59,17 @@ export const insertNewsSchema = z.object({
   imageUrl: z.string().optional()
 });
 
-// Service schema
 export const insertServiceSchema = z.object({
   title: z.string(),
   description: z.string(),
   imageUrl: z.string().optional()
 });
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type InsertJob = z.infer<typeof insertJobSchema>;
-export type InsertNews = z.infer<typeof insertNewsSchema>;
-export type InsertService = z.infer<typeof insertServiceSchema>;
+export type User = typeof users.$inferSelect;
+export type InsertUser = typeof users.$inferInsert;
+export type Job = typeof jobs.$inferSelect;
+export type InsertJob = typeof jobs.$inferInsert;
+export type News = typeof news.$inferSelect;
+export type InsertNews = typeof news.$inferInsert;
+export type Service = typeof services.$inferSelect;
+export type InsertService = typeof services.$inferInsert;
