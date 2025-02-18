@@ -26,30 +26,32 @@ export default function Services() {
 
   return (
     <div className="container py-12">
-      <section className="max-w-4xl mx-auto text-center mb-16">
-        <h1 className="text-4xl font-bold mb-6">Our Services</h1>
-        <p className="text-lg text-muted-foreground">
-          TenRail offers comprehensive rail freight solutions designed to meet your transportation needs. Our modern fleet and experienced team ensure your cargo reaches its destination safely and on time.
-        </p>
-      </section>
+      <div className="max-w-6xl mx-auto">
+        <section className="max-w-4xl mx-auto text-center mb-16">
+          <h1 className="text-4xl font-bold mb-6">Our Services</h1>
+          <p className="text-lg text-muted-foreground">
+            TenRail offers comprehensive rail freight solutions designed to meet your transportation needs. Our modern fleet and experienced team ensure your cargo reaches its destination safely and on time.
+          </p>
+        </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {services.map((service, i) => (
-          <Card key={i} className="overflow-hidden">
-            <CardContent className="p-0">
-              <img
-                src={service.image}
-                alt={service.title}
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
-                <p className="text-muted-foreground">{service.description}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </section>
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {services.map((service, i) => (
+            <Card key={i} className="overflow-hidden">
+              <CardContent className="p-0">
+                <img
+                  src={service.image}
+                  alt={service.title}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6 text-center">
+                  <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
+                  <p className="text-muted-foreground">{service.description}</p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </section>
+      </div>
     </div>
   );
 }
