@@ -1,15 +1,40 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
-import * as schema from "@shared/schema";
 
-neonConfig.webSocketConstructor = ws;
+// In-memory storage
+const storage = {
+  users: [] as any[],
+  jobs: [] as any[],
+  news: [] as any[],
+  services: [] as any[],
+};
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
-  );
-}
-
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle({ client: pool, schema });
+export const db = {
+  users: {
+    findMany: () => storage.users,
+    findFirst: (query: any) => storage.users.find(u => u.username === query.where.username),
+    insert: (data: any) => {
+      storage.users.push(data.values);
+      return data.values;
+    }
+  },
+  jobs: {
+    findMany: () => storage.jobs,
+    insert: (data: any) => {
+      storage.jobs.push({ ...data.values, id: storage.jobs.length + 1 });
+      return data.values;
+    }
+  },
+  news: {
+    findMany: () => storage.news,
+    insert: (data: any) => {
+      storage.news.push({ ...data.values, id: storage.news.length + 1 });
+      return data.values;
+    }
+  },
+  services: {
+    findMany: () => storage.services,
+    insert: (data: any) => {
+      storage.services.push({ ...data.values, id: storage.services.length + 1 });
+      return data.values;
+    }
+  }
+};
